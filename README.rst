@@ -67,3 +67,43 @@ Usage
   -h, --help                               show this help message and exit
 
 [ `Usage Examples <./docs/EXAMPLES.rst>`_ | `Release Changelog <./docs/HISTORY.rst>`_ ]
+
+Func Reference
+--------------
+.. code-block:: python
+
+    from es2csv_lib import Es2csv
+
+
+    es = Es2csv(*args) # 自定义传入参数
+    es.export_csv()
+
+Func Params
+-----------
+.. code-block:: python
+
+    class Es2csv:
+
+        def __init__(self, opts):
+            self.opts = opts
+            self.url = self.opts.get('url', '')
+            self.auth = self.opts.get('auth', '')
+            self.index_prefixes = self.opts.get('index_prefixes', [])
+            self.sort = self.opts.get('sort', [])
+            self.fields = self.opts.get('fields', [])
+            self.query = self.opts.get('query', {})
+            self.tags = self.opts.get('tags', [])
+            self.output_file = self.opts.get('output_file', 'export.csv')
+            self.raw_query = self.opts.get('raw_query', True)
+            self.delimiter = self.opts.get('delimiter', ',')
+            self.max_results = self.opts.get('max_results', 0)
+            self.scroll_size = self.opts.get('scroll_size', 100)
+            self.meta_fields = self.opts.get('meta_fields', [])
+            self.debug_mode = self.opts.get('debug_mode', False)
+
+            self.num_results = 0
+            self.scroll_ids = []
+            self.scroll_time = '30m'
+
+            self.csv_headers = list(META_FIELDS) if self.opts['meta_fields'] else []
+            self.tmp_file = '{}.tmp'.format(self.output_file)
